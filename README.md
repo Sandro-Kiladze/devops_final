@@ -45,3 +45,23 @@ I simulated a Continuous Deployment strategy using a Blue-Green deployment appro
 3.  **Deployment:** I used Terraform (by temporarily modifying the target paths in `terraform/main.tf`) to deploy a new version of the application to the `production_new` folder.
 4.  **Switching:** The "switch" between environments was simulated by conceptually changing which folder our application would be run from to serve live traffic.
 5.  **Rollback:** A rollback to the previous version was simulated by stopping the application in the "green" environment and starting the application in the "blue" environment.
+
+[Local Machine] --> (Git Push) --> [GitHub Repository (dev/main branches)]
+^                                        |
+|                                        | (Pull Request)
+|                                        v
++----------------------------------------+
+|
+| (GitHub Actions Trigger)
+v
+[GitHub Actions CI] --> (Tests Passed) --> [Artifacts (None in this case)]
+|
+| (Terraform Apply - Manual Trigger)
+v
+[Local "Production" Environment (production folder)]
+|
+| (Manual Run)
+v
+[Monitoring Script (monitor.sh)] --> (Logs to monitor.log)
+
+Pictures will be in the PDF.
